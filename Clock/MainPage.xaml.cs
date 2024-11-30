@@ -169,7 +169,6 @@ namespace Clock
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                ClearGrid();
                 int position = 0;
                 foreach (char c in timeString)
                 {
@@ -186,29 +185,14 @@ namespace Clock
                 }
             });
         }
-
-        private void ClearGrid()
-        {
-            foreach (var child in MainGrid.Children)
-            {
-                if (child is BoxView box)
-                {
-                    box.Color = Colors.Transparent;
-                }
-            }
-        }
-
         private void DrawDigit(int digit, int position)
         {
             for (int row = 0; row < 7; row++)
             {
                 for (int col = 0; col < 5; col++)
                 {
-                    if (digits[digit, row, col])
-                    {
-                        var box = (BoxView)MainGrid.Children[row * 41 + col + position];
-                        box.Color = Colors.Black;
-                    }
+                    var box = (BoxView)MainGrid.Children[row * 41 + col + position];
+                    box.Color = digits[digit, row, col] ? Colors.Black : Colors.Transparent;
                 }
             }
         }
